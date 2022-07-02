@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  backend:
+    container_name: backend
+    working_dir: /var/www
+    restart: unless-stopped
+    env_file: ./.env
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        user: wesley
+        uid: 1000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mysql
+    tty: true
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:                                                                                                              
+      - 3306:3306
