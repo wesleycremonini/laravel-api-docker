@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
+use Exception;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Symfony\Component\HttpFoundation\Response as Status;
 
 class Authenticate extends Middleware
 {
@@ -14,8 +17,17 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+        throw new Exception('Faça login primeiro.', Status::HTTP_UNAUTHORIZED);
+    }
+
+    public function handle($request, Closure $next, ...$guards)
+    {
+        if ($jwt = $request->cookie('jwt')) {
+            $request->headers->set('Authorization', 'Bearer ' . $jwt);
+        };
+
+        $this->authenticate($request, $guards);
+
+        return $next($request);
     }
 }
