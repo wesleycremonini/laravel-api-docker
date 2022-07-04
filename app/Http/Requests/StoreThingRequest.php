@@ -3,9 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+
 
 class StoreThingRequest extends FormRequest
 {
+    public $validator = null;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,5 +32,9 @@ class StoreThingRequest extends FormRequest
             'two' => 'required|string|max:255',
             'three' => 'required|string|max:255',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        $this->validator = $validator;
     }
 }

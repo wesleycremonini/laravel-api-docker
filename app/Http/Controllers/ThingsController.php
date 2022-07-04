@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreThingRequest;
 use App\Http\Requests\UpdateThingRequest;
-use Illuminate\Http\Request;
 use App\Models\ThingModel;
+use App\Traits\ValidationErrorsResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Response as Status;
 
 class ThingsController extends Controller
 {
+    use ValidationErrorsResponseTrait;
+
 
     public function index()
     {
@@ -19,6 +21,8 @@ class ThingsController extends Controller
 
     public function store(StoreThingRequest $request)
     {
+        if ($request->validator->fails()) return $this->errors($request);
+
         $found = ThingModel::where('user_id', $request->user()->id)->first();
 
         if ($found) {
@@ -47,6 +51,8 @@ class ThingsController extends Controller
 
     public function update(UpdateThingRequest $request, $id)
     {
+        if ($request->validator->fails()) return $this->errors($request);
+
         try {
             $thing = ThingModel::where('user_id', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
