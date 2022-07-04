@@ -1,64 +1,303 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# DOCS
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h2>Autenticação</h2>
 
-## About Laravel
+<h3><strong>POST</strong> /api/register</h3>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h4>Exemplo de request:</h4>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+{
+    "name": "teste",
+    "password": "pass12345",
+    "password_confirmation": "pass12345"
+}
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<h4>Respostas:</h4>
 
-## Learning Laravel
+201 CREATED
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+{
+    "user": {
+        "name": "teste",
+        "updated_at": "2022-07-04T11:52:28.000000Z",
+        "created_at": "2022-07-04T11:52:28.000000Z",
+        "id": 1
+    }
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+400 BAD REQUEST
 
-## Laravel Sponsors
+```bash
+{
+    "error": {
+        "name": [
+            "The name has already been taken."
+        ],
+        "password": [
+            "The password confirmation does not match."
+        ]
+    }
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<h3><strong>POST</strong> /api/login</h3>
 
-### Premium Partners
+<h4>Exemplo de request:</h4>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+{
+    "name": "teste",
+    "password": "pass12345"
+}
+```
 
-## Contributing
+<h4>Respostas:</h4>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+200 OK
 
-## Code of Conduct
+```bash
+{
+    "jwt": "7|LFb2HXF4IZjUaCifSgcetOrNg4PdQSPyHplJD4NV"
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualmente no request após fazer login. Dura 30 dias.
 
-## Security Vulnerabilities
+400 BAD REQUEST
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+{
+    "error": {
+        "password": [
+            "The password field is required."
+        ]
+    }
+}
+```
 
-## License
+401 UNAUTHORIZED
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+{
+    "error": "Dados inválidos."
+}
+```
+
+<h3><strong>POST</strong> /api/logout</h3>
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "message": "Logout realizado com sucesso."
+}
+```
+
+<h3><strong>GET</strong> /api/user</h3>
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "user": {
+        "id": 1,
+        "name": "teste",
+        "created_at": "2022-07-03T14:12:01.000000Z",
+        "updated_at": "2022-07-03T14:12:01.000000Z"
+    }
+}
+```
+
+<h2>Coisas</h2>
+
+<h3><strong>GET</strong> /api/things</h3>
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "things": {
+        "current_page": 1,
+        "data": [
+            {
+                "user_id": 1,
+                "one": "one1",
+                "two": "two",
+                "three": "three",
+                "id": 3,
+                "created_at": "2022-07-04T11:01:55.000000Z",
+                "updated_at": "2022-07-04T11:06:27.000000Z"
+            }
+        ],
+        "first_page_url": "http://0.0.0.0:8000/api/things?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://0.0.0.0:8000/api/things?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://0.0.0.0:8000/api/things?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "http://0.0.0.0:8000/api/things",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 1
+    }
+}
+```
+
+<h3><strong>POST</strong> /api/things</h3>
+
+<h4>Exemplo de request:</h4>
+
+```bash
+{
+    "one": "one",
+    "two": "two",
+    "three": "three"
+}
+```
+
+<h4>Respostas:</h4>
+
+201 CREATED
+
+```bash
+{
+    "thing": {
+        "user_id": 1,
+        "one": "one",
+        "two": "two",
+        "three": "three",
+        "updated_at": "2022-07-04T12:19:56.000000Z",
+        "created_at": "2022-07-04T12:19:56.000000Z",
+        "id": 4
+    }
+}
+```
+
+400 BAD REQUEST
+
+```bash
+{
+    "error": "Você só pode ter uma Coisa."
+}
+```
+
+```bash
+{
+    "error": {
+        "three": [
+            "The three field is required."
+        ]
+    }
+}
+```
+
+<h3><strong>GET</strong> /api/things/1</h3>
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "thing": {
+        "user_id": 1,
+        "one": "one",
+        "two": "two",
+        "three": "three",
+        "id": 3,
+        "created_at": "2022-07-04T11:01:55.000000Z",
+        "updated_at": "2022-07-04T11:01:55.000000Z"
+    }
+}
+```
+
+404 NOT FOUND
+
+```bash
+{
+    "error": "Coisa do usuário id:1 não encontrada"
+}
+```
+
+<h3><strong>PUT</strong> /api/things/1</h3>
+
+<h4>Exemplo de request:</h4>
+
+```bash
+{
+    "one": "one1"
+}
+```
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "thing": {
+        "user_id": 2,
+        "one": "one1",
+        "two": "two",
+        "three": "three",
+        "id": 4,
+        "created_at": "2022-07-04T12:19:56.000000Z",
+        "updated_at": "2022-07-04T12:26:53.000000Z"
+    }
+}
+```
+
+404 NOT FOUND
+
+```bash
+{
+    "error": "Coisa do usuário id:1 não encontrada"
+}
+```
+
+<h3><strong>DELETE</strong> /api/things/1</h3>
+
+<h4>Respostas:</h4>
+
+200 OK
+
+```bash
+{
+    "message": "Coisa removida com sucesso"
+}
+```
+
+404 NOT FOUND
+
+```bash
+{
+    "error": "Coisa do usuário id:1 não encontrada"
+}
+```
