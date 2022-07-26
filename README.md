@@ -2,11 +2,9 @@
 
 <h2>Autenticação</h2>
 
-<h3><strong>POST</strong> /api/register</h3>
+```POST``` /api/register
 
-<h4>Exemplo de request:</h4>
-
-```bash
+```json
 {
     "name": "teste",
     "password": "pass12345",
@@ -16,9 +14,9 @@
 
 <h4>Respostas:</h4>
 
-201 CREATED
+```201``` CREATED
 
-```bash
+```json
 {
     "user": {
         "name": "teste",
@@ -29,9 +27,9 @@
 }
 ```
 
-400 BAD REQUEST
+```400``` BAD REQUEST
 
-```bash
+```json
 {
     "error": {
         "name": [
@@ -44,11 +42,9 @@
 }
 ```
 
-<h3><strong>POST</strong> /api/login</h3>
+```POST``` /api/login
 
-<h4>Exemplo de request:</h4>
-
-```bash
+```json
 {
     "name": "teste",
     "password": "pass12345"
@@ -57,9 +53,9 @@
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "jwt": "7|LFb2HXF4IZjUaCifSgcetOrNg4PdQSPyHplJD4NV"
 }
@@ -67,9 +63,9 @@
 
 Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualmente no request após fazer login. Dura 30 dias.
 
-400 BAD REQUEST
+```400``` BAD REQUEST
 
-```bash
+```json
 {
     "error": {
         "password": [
@@ -79,33 +75,33 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 }
 ```
 
-401 UNAUTHORIZED
+```401``` UNAUTHORIZED
 
-```bash
+```json
 {
     "error": "Dados inválidos."
 }
 ```
 
-<h3><strong>POST</strong> /api/logout</h3>
+```POST``` /api/logout
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "message": "Logout realizado com sucesso."
 }
 ```
 
-<h3><strong>GET</strong> /api/user</h3>
+```GET``` /api/user
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "user": {
         "id": 1,
@@ -118,13 +114,13 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 
 <h2>Coisas</h2>
 
-<h3><strong>GET</strong> /api/things</h3>
+```GET``` /api/things
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "things": {
         "current_page": 1,
@@ -169,12 +165,9 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
     }
 }
 ```
+```POST``` /api/things
 
-<h3><strong>POST</strong> /api/things</h3>
-
-<h4>Exemplo de request:</h4>
-
-```bash
+```json
 {
     "one": "one",
     "two": "two",
@@ -184,9 +177,9 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 
 <h4>Respostas:</h4>
 
-201 CREATED
+```201``` CREATED
 
-```bash
+```json
 {
     "thing": {
         "user_id": 1,
@@ -200,15 +193,15 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 }
 ```
 
-400 BAD REQUEST
+```400``` BAD REQUEST
 
-```bash
+```json
 {
     "error": "Você só pode ter uma Coisa."
 }
 ```
 
-```bash
+```json
 {
     "error": {
         "three": [
@@ -218,13 +211,13 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 }
 ```
 
-<h3><strong>GET</strong> /api/things/1</h3>
+```GET``` /api/things/{id}
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "thing": {
         "user_id": 1,
@@ -238,19 +231,18 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 }
 ```
 
-404 NOT FOUND
+```404``` NOT FOUND
 
-```bash
+```json
 {
     "error": "Coisa do usuário id:1 não encontrada"
 }
 ```
 
-<h3><strong>PUT</strong> /api/things/1</h3>
+```PUT``` /api/things/{id}
 
-<h4>Exemplo de request:</h4>
 
-```bash
+```json
 {
     "one": "one1"
 }
@@ -258,9 +250,9 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "thing": {
         "user_id": 2,
@@ -274,29 +266,29 @@ Nota: O jwt já vai para os cookies automaticamente, sem precisar enviar manualm
 }
 ```
 
-404 NOT FOUND
+```404``` NOT FOUND
 
-```bash
+```json
 {
     "error": "Coisa do usuário id:1 não encontrada"
 }
 ```
 
-<h3><strong>DELETE</strong> /api/things/1</h3>
+```DELETE``` /api/things/{id}
 
 <h4>Respostas:</h4>
 
-200 OK
+```200``` OK
 
-```bash
+```json
 {
     "message": "Coisa removida com sucesso"
 }
 ```
 
-404 NOT FOUND
+```404``` NOT FOUND
 
-```bash
+```json
 {
     "error": "Coisa do usuário id:1 não encontrada"
 }
